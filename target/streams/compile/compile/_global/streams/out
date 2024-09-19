@@ -1,0 +1,16 @@
+[error] C:\Users\tomli\Workspace\Personal\deutsche-tl\src\main\scala\Main.scala:2:8: not found: object cats
+[error] import cats.effect.{ExitCode, IO, IOApp}
+[error]        ^
+[error] C:\Users\tomli\Workspace\Personal\deutsche-tl\src\main\scala\Main.scala:5:21: not found: type IOApp
+[error] object Main extends IOApp {
+[error]                     ^
+[error] C:\Users\tomli\Workspace\Personal\deutsche-tl\src\main\scala\Main.scala:7:41: not found: type IO
+[error]   override def run(args: List[String]): IO[ExitCode] =
+[error]                                         ^
+[error] C:\Users\tomli\Workspace\Personal\deutsche-tl\src\main\scala\Main.scala:8:5: not found: value IO
+[error]     IO.println("Hello, World!").map(_ => ExitCode.Success)
+[error]     ^
+[error] C:\Users\tomli\Workspace\Personal\deutsche-tl\src\main\scala\Main.scala:8:42: not found: value ExitCode
+[error]     IO.println("Hello, World!").map(_ => ExitCode.Success)
+[error]                                          ^
+[error] 5 errors found
