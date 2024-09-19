@@ -4,6 +4,9 @@ ThisBuild / scalaVersion := "2.13.12"
 
 Compile / run / fork := true
 
+ThisBuild / Compile / run / fork := true
+
+
 //val Http4sVersion = "0.23.14"
 //val CirceVersion = "0.14.3"
 //val CirisConfig = "3.1.0"
@@ -16,11 +19,24 @@ Compile / run / fork := true
 //val NatchezVersion = "0.3.1"
 //val otelVersion = "1.34.1"
 
+val weaverVersion = "0.8.1"
+
+//object weaver {
+//  private lazy val org     = "com.disneystreaming"
+//  private lazy val version = "0.8.1"
+//
+//  lazy val cats       = org %% "weaver-cats"       % version
+//  lazy val scalacheck = org %% "weaver-scalacheck" % version
+//  lazy val discipline = org %% "weaver-discipline" % version
+//
+//  lazy val test = Seq(cats, scalacheck, discipline)
+//}
+
 
 lazy val root = (project in file("."))
   .settings(
     name := "deutsche-tl",
-    idePackagePrefix := Some("org.thomlink.tictactoe"),
+    //    idePackagePrefix := Some("org.thomlink.tictactoe"),
     //      libraryDependencies ++= Seq(
     ////      "io.opentelemetry" % "opentelemetry-exporter-otlp"    % otelVersion,
     ////      "io.opentelemetry" % "opentelemetry-exporter-logging" % otelVersion,
@@ -41,7 +57,13 @@ lazy val root = (project in file("."))
     ////      "org.typelevel" %% "cats-effect-testing-scalatest" % "1.4.0" % "test,it",
     //    ),
 
-    libraryDependencies += "org.typelevel" %% "cats-effect" % "3.5.4",
+    libraryDependencies ++= Seq(
+      "org.typelevel" %% "cats-effect" % "3.5.4",
+      "org.typelevel" %% "cats-effect" % "3.5.4",
+//      "com.com.disneystreaming" %% "weaver-scalacheck" % weaverVersion
+      "com.disneystreaming" %% "weaver-scalacheck" % weaverVersion % Test,
+      "com.disneystreaming" %% "weaver-cats" % weaverVersion % Test,
+    ),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
     scalacOptions += "-Wnonunit-statement"
   )

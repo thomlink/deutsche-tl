@@ -25,5 +25,6 @@ project/plugins/project/
 .bsp/
 project/metals.sbt
 project/project/*
+project/target/*
 
 .vscode
