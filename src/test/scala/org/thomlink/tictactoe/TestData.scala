@@ -2,48 +2,48 @@ package org.thomlink.tictactoe
 
 import cats.Show
 import org.scalacheck.Gen
-import org.thomlink.tictactoe.model.{Board, Free, O, Occupied, Player, X}
+import org.thomlink.tictactoe.model.{Board, Free, Occupied, Player}
 
 object TestData {
 
   def topRowWinner(winner: Player): Board = {
     winner match {
-      case model.X => Board(
-        a1 = Occupied(X), b1 = Occupied(X), c1 = Occupied(X), a2 = Occupied(O), b2 = Free, c2 = Occupied(O), a3 = Free, b3 = Free, c3 = Free
+      case Player.X => Board(
+        a1 = Occupied(Player.X), b1 = Occupied(Player.X), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Free, c2 = Occupied(Player.O), a3 = Free, b3 = Free, c3 = Free
       )
-      case model.O => Board(
-        a1 = Occupied(O), b1 = Occupied(O), c1 = Occupied(O), a2 = Occupied(X), b2 = Free, c2 = Occupied(X), a3 = Occupied(X), b3 = Free, c3 = Free
+      case Player.O => Board(
+        a1 = Occupied(Player.O), b1 = Occupied(Player.O), c1 = Occupied(Player.O), a2 = Occupied(Player.X), b2 = Free, c2 = Occupied(Player.X), a3 = Occupied(Player.X), b3 = Free, c3 = Free
       )
     }
   }
 
   def middleRowWinner(winner: Player): Board = {
     winner match {
-      case model.X => Board(
-        a1 = Free, b1 = Free, c1 = Occupied(O), a2 = Occupied(X), b2 = Occupied(X), c2 = Occupied(X), a3 = Occupied(O), b3 = Free, c3 = Free
+      case Player.X => Board(
+        a1 = Free, b1 = Free, c1 = Occupied(Player.O), a2 = Occupied(Player.X), b2 = Occupied(Player.X), c2 = Occupied(Player.X), a3 = Occupied(Player.O), b3 = Free, c3 = Free
       )
-      case model.O => Board(
-        a1 = Occupied(O), b1 = Occupied(O), c1 = Occupied(O), a2 = Occupied(X), b2 = Free, c2 = Occupied(X), a3 = Occupied(X), b3 = Free, c3 = Free
+      case Player.O => Board(
+        a1 = Occupied(Player.O), b1 = Occupied(Player.O), c1 = Occupied(Player.O), a2 = Occupied(Player.X), b2 = Free, c2 = Occupied(Player.X), a3 = Occupied(Player.X), b3 = Free, c3 = Free
       )
     }
   }
 
   def bottomRowWinner(winner: Player): Board = {
     winner match {
-      case model.X => Board(
-        a1 = Free, b1 = Free, c1 = Free, a2 = Free, b2 = Occupied(O), c2 = Occupied(O), a3 = Occupied(X), b3 = Occupied(X), c3 = Occupied(X)
+      case Player.X => Board(
+        a1 = Free, b1 = Free, c1 = Free, a2 = Free, b2 = Occupied(Player.O), c2 = Occupied(Player.O), a3 = Occupied(Player.X), b3 = Occupied(Player.X), c3 = Occupied(Player.X)
       )
-      case model.O => Board(
-        a1 = Free, b1 = Free, c1 = Occupied(X), a2 = Free, b2 = Occupied(X), c2 = Occupied(X), a3 = Occupied(O), b3 = Occupied(O), c3 = Occupied(O))
+      case Player.O => Board(
+        a1 = Free, b1 = Free, c1 = Occupied(Player.X), a2 = Free, b2 = Occupied(Player.X), c2 = Occupied(Player.X), a3 = Occupied(Player.O), b3 = Occupied(Player.O), c3 = Occupied(Player.O))
     }
   }
 
   def upwardDiagonalWinner(player: model.Player): Board = player match {
-    case model.X => Board(
-      a1 = Occupied(X), b1 = Free, c1 = Free, a2 = Free, b2 = Occupied(X), c2 = Occupied(O), a3 = Occupied(O), b3 = Free, c3 = Occupied(X)
+    case Player.X => Board(
+      a1 = Occupied(Player.X), b1 = Free, c1 = Free, a2 = Free, b2 = Occupied(Player.X), c2 = Occupied(Player.O), a3 = Occupied(Player.O), b3 = Free, c3 = Occupied(Player.X)
     )
-    case model.O => Board(
-      a1 = Occupied(O), b1 = Occupied(X), c1 = Free, a2 = Free, b2 = Occupied(O), c2 = Occupied(X), a3 = Occupied(X), b3 = Free, c3 = Occupied(O)
+    case Player.O => Board(
+      a1 = Occupied(Player.O), b1 = Occupied(Player.X), c1 = Free, a2 = Free, b2 = Occupied(Player.O), c2 = Occupied(Player.X), a3 = Occupied(Player.X), b3 = Free, c3 = Occupied(Player.O)
     )
   }
 
@@ -81,37 +81,37 @@ object TestData {
   //OOX  XOO  XOO  OOX
   //XXO  OXX  XOX  XOX
   val drawGame: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(O), c1 = Occupied(X), a2 = Occupied(O), b2 = Occupied(O), c2 = Occupied(X), a3 = Occupied(X), b3 = Occupied(X), c3 = Occupied(O)
+    a1 = Occupied(Player.X), b1 = Occupied(Player.O), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Occupied(Player.O), c2 = Occupied(Player.X), a3 = Occupied(Player.X), b3 = Occupied(Player.X), c3 = Occupied(Player.O)
   )
 
   val incompleteGame: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(O), c1 = Occupied(X), a2 = Occupied(O), b2 = Occupied(O), c2 = Occupied(X), a3 = Occupied(X), b3 = Free, c3 = Free
+    a1 = Occupied(Player.X), b1 = Occupied(Player.O), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Occupied(Player.O), c2 = Occupied(Player.X), a3 = Occupied(Player.X), b3 = Free, c3 = Free
   )
 
   val incompleteGame2: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(O), c1 = Occupied(X), a2 = Free, b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
+    a1 = Occupied(Player.X), b1 = Occupied(Player.O), c1 = Occupied(Player.X), a2 = Free, b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
   )
   //---
 
   val multipleWinners: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(X), c1 = Occupied(X), a2 = Occupied(O), b2 = Occupied(O), c2 = Occupied(O), a3 = Free, b3 = Free, c3 = Free
+    a1 = Occupied(Player.X), b1 = Occupied(Player.X), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Occupied(Player.O), c2 = Occupied(Player.O), a3 = Free, b3 = Free, c3 = Free
   )
 
 
   val invalidBoardXs: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(X), c1 = Occupied(X), a2 = Occupied(O), b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
+    a1 = Occupied(Player.X), b1 = Occupied(Player.X), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
   )
 
   val invalidBoardOs: Board = Board(
-    a1 = Occupied(O), b1 = Occupied(O), c1 = Occupied(X), a2 = Occupied(O), b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
+    a1 = Occupied(Player.O), b1 = Occupied(Player.O), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
   )
 
   val invalidBoardOMovesAfterLoss: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(X), c1 = Occupied(X), a2 = Occupied(O), b2 = Occupied(O), c2 = Free, a3 = Occupied(O), b3 = Free, c3 = Free
+    a1 = Occupied(Player.X), b1 = Occupied(Player.X), c1 = Occupied(Player.X), a2 = Occupied(Player.O), b2 = Occupied(Player.O), c2 = Free, a3 = Occupied(Player.O), b3 = Free, c3 = Free
   )
 
   val invalidBoardXMovesAfterLoss: Board = Board(
-    a1 = Occupied(X), b1 = Occupied(X), c1 = Occupied(O), a2 = Occupied(X), b2 = Occupied(X), c2 = Occupied(O), a3 = Free, b3 = Free, c3 = Occupied(O)
+    a1 = Occupied(Player.X), b1 = Occupied(Player.X), c1 = Occupied(Player.O), a2 = Occupied(Player.X), b2 = Occupied(Player.X), c2 = Occupied(Player.O), a3 = Free, b3 = Free, c3 = Occupied(Player.O)
   )
 
   val unbalancedMovesGen = Gen.oneOf(
