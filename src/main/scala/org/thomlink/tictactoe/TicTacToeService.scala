@@ -1,13 +1,22 @@
 package org.thomlink.tictactoe
 
-import org.thomlink.tictactoe.model.{Board, Draw, Free, GameResult, Incomplete, Occupied, Player, PositionState, Winner}
+import com.sun.rowset.internal
+import org.thomlink.tictactoe.model.{Board, Column, Draw, Free, GameResult, Incomplete, Move, Occupied, Player, Position, PositionState, Winner, Row}
 
 
+sealed trait TTTServiceError extends Throwable
 
-sealed trait InvalidBoardError extends Throwable
+case class PositionUnavailable(position: Position) extends TTTServiceError
+
+sealed trait InvalidBoardError extends TTTServiceError
+
 case class MultipleWinners(description: String) extends InvalidBoardError
+
 case class MovedAfterLoss(description: String) extends InvalidBoardError
+
 case class IncorrectMoveCount(description: String) extends InvalidBoardError
+
+
 
 
 
@@ -136,6 +145,63 @@ object TicTacToeService {
   }
 
 
+
+
+
+  /**
+   *
+   * @param board
+   * @param move
+   * @return New board if the position was empty, None if not
+   */
+  def boardAfterMove(board: Board, move: Move): Either[TTTServiceError, Board] = {
+    val positionStateAtMovePosition = move.position match {
+      case Position(Column.A, Row.One) => board.a1
+      case Position(Column.B, Row.One) => board.b1
+      case Position(Column.C, Row.One) => board.c1
+      case Position(Column.A, Row.Two) => board.a2
+      case Position(Column.B, Row.Two) => board.b2
+      case Position(Column.C, Row.Two) => board.c2
+      case Position(Column.A, Row.Three) => board.a3
+      case Position(Column.B, Row.Three) => board.b3
+      case Position(Column.C, Row.Three) => board.c3
+    }
+
+
+    // check if the pisition is empty
+    // insert at posiiton
+    //
+
+    if (positionStateAtMovePosition == Free) {
+      move.position match {
+        case Position(Column.A, Row.One) => Right(board.copy(a1  = Occupied(move.player)))
+        case Position(Column.B, Row.One) => Right(board.copy(b1  = Occupied(move.player)))
+        case Position(Column.C, Row.One) => Right(board.copy(c1  = Occupied(move.player)))
+        case Position(Column.A, Row.Two) => Right(board.copy(a2  = Occupied(move.player)))
+        case Position(Column.B, Row.Two) => Right(board.copy(b2  = Occupied(move.player)))
+        case Position(Column.C, Row.Two) => Right(board.copy(c2  = Occupied(move.player)))
+        case Position(Column.A, Row.Three) => Right(board.copy(a3  = Occupied(move.player)))
+        case Position(Column.B, Row.Three) => Right(board.copy(b3  = Occupied(move.player)))
+        case Position(Column.C, Row.Three) => Right(board.copy(c3  = Occupied(move.player)))
+      }
+    } else Left(PositionUnavailable(move.position))
+
+
+
+
+  }
+
+
+
+
+  def makeMove(board: Board, move: Move): Either[TTTServiceError, (Board, GameResult)] = {
+
+    for {
+      newBoard <- boardAfterMove(board, move)
+      gameResult <- gameResult(newBoard)
+    } yield (newBoard, gameResult)
+
+  }
 
 
 }

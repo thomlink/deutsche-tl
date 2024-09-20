@@ -1,5 +1,7 @@
 package org.thomlink.tictactoe
 import cats.effect.{ExitCode, IO, IOApp}
+import org.thomlink.tictactoe.model.Row.One
+import org.thomlink.tictactoe.model._
 
 
 /*
@@ -13,9 +15,30 @@ Draw can only occur when the board is full
 
  */
 
+/*
+fn1 boardAfterMove: board, move -> ?board
+fn2 move: board, move -> ?board
+
+
+
+
+ */
+
 
 object Main extends IOApp {
 
-  override def run(args: List[String]): IO[ExitCode] =
-    IO.println("Hello, World!").map(_ => ExitCode.Success)
+  override def run(args: List[String]): IO[ExitCode] = {
+    val move = Move(player = Player.X, position = Position(column = Column.A, row = One))
+    val board = Board.initial
+
+
+
+
+    IO.fromEither{
+      for {
+      r <- TicTacToeService.makeMove(board, move)
+      _ = print(r)
+    } yield ExitCode.Success
+  }
+  }
 }

@@ -1,5 +1,5 @@
 
-Tom Linker's submission for the Tic Tac Toe exercise, in applying for a role at Deutsche Bank.
+Tom Linker's submission for the Tic Tac Toe exercise.
 
 ## Assumptions
 - Board is 3x3 and unlikely to change
