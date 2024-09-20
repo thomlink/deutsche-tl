@@ -18,7 +18,6 @@ package object model {
   case object Free extends PositionState
 
 
-
   case class Board(
                   a1: PositionState,
                   b1: PositionState,
@@ -34,11 +33,44 @@ package object model {
     def toList: List[PositionState] = List(a1, b1, c1, a2,b2,c2,a3,b3,c3)
   }
 
+  //
+
   object Board {
     val initial: Board = Board(
       a1 = Free, b1 = Free, c1 = Free, a2 = Free, b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
     )
   }
+
+
+
+
+  sealed trait Row
+
+  object Row {
+
+    case object One extends Row
+
+    case object Two extends Row
+
+    case object Three extends Row
+  }
+
+
+  sealed trait Column
+
+  object Column {
+
+    case object A extends Column
+
+    case object B extends Column
+
+    case object C extends Column
+  }
+
+  case class Position(column: Column, row: Row)
+
+  case class Move(player: Player, position: Position)
+
 
 
 }

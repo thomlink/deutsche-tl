@@ -1,12 +1,16 @@
 package org.thomlink.tictactoe
 
+import cats.Eval.One
 import model._
+import org.thomlink.tictactoe
 import org.thomlink.tictactoe.TestData._
+import org.thomlink.tictactoe.TicTacToeService
+import org.thomlink.tictactoe.model.Player.X
 import weaver.scalacheck.Checkers
 
 //import weaver.scalacheck.Checkers
 
-object TicTacToeServiceTest extends weaver.SimpleIOSuite  with Checkers{
+object TicTacToeServiceTest extends weaver.SimpleIOSuite with Checkers {
 
   /*
   Test Cases:
@@ -58,10 +62,10 @@ object TicTacToeServiceTest extends weaver.SimpleIOSuite  with Checkers{
       |when the board is full and neither side has won
       |""".stripMargin
   ) {
-      val board = TestData.drawGame
-      val result = TicTacToeService.gameResult(board)
-      expect(result == Right(Draw))
-    }
+    val board = TestData.drawGame
+    val result = TicTacToeService.gameResult(board)
+    expect(result == Right(Draw))
+  }
 
   pureTest(
     """
@@ -137,6 +141,66 @@ object TicTacToeServiceTest extends weaver.SimpleIOSuite  with Checkers{
 
 
 
+
+
+  // ---
+
+
+  pureTest(
+    """
+      |The TicTacToeService.boardAfterMove function should
+      |return a new board
+      |when a valid move was played
+      |""".stripMargin
+  ) {
+
+    val board = Board.initial
+
+    val move = Move(Player.X, position = Position(column = Column.A, row = Row.One))
+
+    expect(
+      TicTacToeService.boardAfterMove(board, move).contains(Board(
+        a1 = Occupied(Player.X), b1 = Free, c1 = Free, a2 = Free, b2 = Free, c2 = Free, a3 = Free, b3 = Free, c3 = Free
+      ))
+    )
+
+  }
+
+  pureTest(
+    """
+      |The TicTacToeService.boardAfterMove function should
+      |return a new board
+      |when a valid move was played
+      |""".stripMargin
+  ) {
+
+
+    val board = Board.initial.copy(a1= Occupied(X))
+
+    val move = Move(Player.O, position = Position(column = Column.A, row = Row.One))
+
+
+      TicTacToeService.boardAfterMove(board, move) match {
+        case Left(PositionUnavailable(_)) => success
+        case Right(value) => failure(s"Expected Position unavailable, got $value")
+      }
+
+
+  }
+
+
+
+  pureTest(
+    """
+      |The TicTacToeService.boardAfterMove function should
+      |return a new board
+      |when a valid move was played
+      |""".stripMargin
+  ) {
+
+
+
+  }
 
 
 
