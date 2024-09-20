@@ -1,6 +1,6 @@
 package org.thomlink.tictactoe
 
-import org.thomlink.tictactoe.model.{Board, Draw, Free, GameResult, Incomplete, O, Occupied, Player, PositionState, Winner, X}
+import org.thomlink.tictactoe.model.{Board, Draw, Free, GameResult, Incomplete, Occupied, Player, PositionState, Winner}
 
 
 
@@ -12,9 +12,6 @@ case class IncorrectMoveCount(description: String) extends InvalidBoardError
 
 
 object TicTacToeService {
-
-  //  sealed trait BoardError extends Throwable
-  //  case class InvalidBoard(description: String) extends BoardError
 
   private def resultOfThreeTiles(a: PositionState, b: PositionState, c: PositionState): Option[Player] =
     if (a == b && b == c) {
@@ -68,8 +65,8 @@ object TicTacToeService {
    */
   private def moveCountDiff(board: Board): Int = {
     val positions = board.toList
-    val xMoves = positions.count(_ == Occupied(X))
-    val oMoves = positions.count(_ == Occupied(O))
+    val xMoves = positions.count(_ == Occupied(Player.X))
+    val oMoves = positions.count(_ == Occupied(Player.O))
     xMoves - oMoves
   }
 
@@ -111,16 +108,16 @@ object TicTacToeService {
       allPossibleWinners(board).flatten match {
         case winner :: Nil =>
           winner match {
-            case model.X =>
+            case Player.X =>
               moveDifference match {
-                case 1 => Right(Winner(X))
+                case 1 => Right(Winner(Player.X))
                 case x if x > 1 => Left(IncorrectMoveCount("foo"))
                 case _ => Left(MovedAfterLoss("O moved after losing"))
               }
 
-            case model.O =>
+            case Player.O =>
               moveDifference match {
-                case 0 => Right(Winner(O))
+                case 0 => Right(Winner(Player.O))
                 case x if x < 0 => Left(IncorrectMoveCount("foo"))
                 case _ => Left(MovedAfterLoss("X moved after losing"))
               }

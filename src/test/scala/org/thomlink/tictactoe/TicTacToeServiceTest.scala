@@ -32,9 +32,9 @@ object TicTacToeServiceTest extends weaver.SimpleIOSuite  with Checkers{
       |in all cases where X should win
       |""".stripMargin
   ) {
-    forall(winningBoardGen(X)) { board =>
+    forall(winningBoardGen(Player.X)) { board =>
       val result = TicTacToeService.gameResult(board)
-      expect(result == Right(Winner(X)))
+      expect(result == Right(Winner(Player.X)))
     }
   }
 
@@ -45,9 +45,9 @@ object TicTacToeServiceTest extends weaver.SimpleIOSuite  with Checkers{
       |in all cases where O should win
       |""".stripMargin
   ) {
-    forall(winningBoardGen(O)) { board =>
+    forall(winningBoardGen(Player.O)) { board =>
       val result = TicTacToeService.gameResult(board)
-      expect(result == Right(Winner(O)))
+      expect(result == Right(Winner(Player.O)))
     }
   }
 

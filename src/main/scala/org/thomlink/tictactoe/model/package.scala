@@ -9,9 +9,10 @@ package object model {
 
 
   sealed trait Player
-  case object X extends Player
-  case object O extends Player
-
+  object Player {
+    case object X extends Player
+    case object O extends Player
+  }
   sealed trait PositionState
   case class Occupied(player: Player) extends PositionState
   case object Free extends PositionState
